@@ -46,7 +46,7 @@ app.MapPost("/login", async (UserDto newUser, UsersStoreContext DbContext) =>{
         return Results.Unauthorized();
     }
 
-    return Results.Ok("Login successful.") ;
+    return Results.Ok(new { user.Id, user.Username, user.Email }); 
 });
 
         return app;

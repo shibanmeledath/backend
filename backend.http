@@ -3,11 +3,16 @@ POST  {{backend_HostAddress}}/register
 Content-Type: application/json
 
  {
-   "username":"Victodr Fordd",
-   "email": "Victorford@gmail.com",
+   "username":"Roman Dew",
+   "email": "roman@gmail.com",
    "password": "s@etwyxwuw"
   }
 ###
 
-GET  {{backend_HostAddress}}/logins/1
+POST   {{backend_HostAddress}}/login
+Content-Type: application/json
 
+ {
+   "email": "roman@gmail.com",
+   "password": "s@etwyxwuw"
+  }
