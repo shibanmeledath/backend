@@ -35,7 +35,10 @@ app.MapPost("/login", async (UserDto newUser, UsersStoreContext DbContext) =>{
     var user = await DbContext.Users.SingleOrDefaultAsync(u => u.Email == newUser.Email);
     if (user == null)
     {
-        return Results.NotFound("User not found.");
+        return Results.Json(new{
+            status ="Error",
+            message="User not found"
+        },statusCode:404);
     }
 
     bool isPasswordValid = BCrypt.Net.BCrypt.Verify(newUser.Password, user.PasswordHash);
@@ -43,10 +46,24 @@ app.MapPost("/login", async (UserDto newUser, UsersStoreContext DbContext) =>{
     if (!isPasswordValid)
     {
      
-        return Results.Unauthorized();
+        return  Results.Json(new 
+        {
+            status = "Error",
+            message = "Incorrect password."
+        }, statusCode: 401);
     }
 
-    return Results.Ok(new { user.Id, user.Username, user.Email }); 
+       return Results.Json(new 
+    {
+        status = "Success",
+        message = "Login successful.",
+        Data = new 
+        {
+            user.Id,
+            user.Username,
+            user.Email
+        }
+    });
 });
 
         return app;
