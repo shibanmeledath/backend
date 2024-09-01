@@ -17,7 +17,11 @@ app.MapPost("/register", async (UserDto newUser, UsersStoreContext DbContext) =>
 
     if (emailExists)
     {
-        return Results.Conflict("Email already in use.");
+           return  Results.Json(new 
+        {
+            status = "Error",
+            message = "Email already in use."
+        }, statusCode: 401);
     }
 
   
@@ -28,7 +32,12 @@ app.MapPost("/register", async (UserDto newUser, UsersStoreContext DbContext) =>
     await DbContext.SaveChangesAsync();
 
 
-    return Results.Ok(user);
+      return Results.Json(new 
+    {
+        status = "Success",
+        message = "Registration  successful.",
+      
+    },statusCode:200);
 });
 
 app.MapPost("/login", async (UserDto newUser, UsersStoreContext DbContext) =>{
@@ -63,7 +72,7 @@ app.MapPost("/login", async (UserDto newUser, UsersStoreContext DbContext) =>{
             user.Username,
             user.Email
         }
-    });
+    },statusCode:200);
 });
 
         return app;
