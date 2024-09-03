@@ -2,6 +2,7 @@ using System;
 using backend.Data;
 using backend.Dto;
 using backend.Extensions;
+using backend.Mappings;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,9 @@ namespace backend.Controllers{
 public static  class RegisterController
 {
     public static WebApplication MapRegisterController(this WebApplication app){
-app.MapPost("/register", async (UserDto newUser, UsersStoreContext DbContext) =>
+app.MapPost("/register", async (UserDto newUser, UsersStoreContext UserContext) =>
 {
-    bool emailExists = await DbContext.Users.AnyAsync(u => u.Email == newUser.Email);
+    bool emailExists = await UserContext.Users.AnyAsync(u => u.Email == newUser.Email);
 
     if (emailExists)
     {
@@ -28,8 +29,8 @@ app.MapPost("/register", async (UserDto newUser, UsersStoreContext DbContext) =>
     UserModel user = newUser.ToEntity();
 
 
-    DbContext.Users.Add(user);
-    await DbContext.SaveChangesAsync();
+    UserContext.Users.Add(user);
+    await UserContext.SaveChangesAsync();
 
 
       return Results.Json(new 
@@ -40,8 +41,8 @@ app.MapPost("/register", async (UserDto newUser, UsersStoreContext DbContext) =>
     },statusCode:200);
 });
 
-app.MapPost("/login", async (UserDto newUser, UsersStoreContext DbContext) =>{
-    var user = await DbContext.Users.SingleOrDefaultAsync(u => u.Email == newUser.Email);
+app.MapPost("/login", async (UserDto newUser, UsersStoreContext UserContext) =>{
+    var user = await UserContext.Users.SingleOrDefaultAsync(u => u.Email == newUser.Email);
     if (user == null)
     {
         return Results.Json(new{
@@ -74,6 +75,8 @@ app.MapPost("/login", async (UserDto newUser, UsersStoreContext DbContext) =>{
         }
     },statusCode:200);
 });
+
+
 
         return app;
     }

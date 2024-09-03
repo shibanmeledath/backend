@@ -1,0 +1,6 @@
+dotnet ef migrations add InitialMigration --context UsersStoreContext
+dotnet ef migrations add InitialMigration --context ProductStoreContext
+
+
+dotnet ef database update --context UsersStoreContext
+dotnet ef database update --context ProductStoreContext

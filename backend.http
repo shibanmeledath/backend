@@ -16,3 +16,21 @@ Content-Type: application/json
    "email": "roman@gmail.com",
    "password": "s@etwyxwuw"
   }
+
+###
+POST  {{backend_HostAddress}}/addproduct
+Content-Type: application/json
+
+ {
+   "name":"Sapotta",
+    "description":"Corfoc",
+    "image":"image 2"
+  }
+###
+
+POST   {{backend_HostAddress}}/viewproduct
+Content-Type: application/json
+
+ {
+   "name": "Sapotta"
+  }

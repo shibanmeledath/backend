@@ -21,6 +21,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<UsersStoreContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDbContext<ProductStoreContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+
 // Add services to the container
 builder.Services.AddControllers();
 
@@ -37,6 +41,8 @@ app.UseRouting();
 await app.MigrateDbAsync();
 
  app.MapRegisterController();
+ app.MapProductController();
+
 // Map controllers
 app.MapControllers();
 
